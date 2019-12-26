@@ -106,6 +106,8 @@ inline std::chrono::minutes ParseHourMinute(const std::string &hours_minutes)
 
 std::string GetUtcTime(const std::string& time_string);
 
+uint64_t GetTickCount();
+
 template <class T>
 struct is_time_unit : std::false_type {};
 template <class Rep, typename Period>

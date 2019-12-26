@@ -1,8 +1,7 @@
 #include <chrono>
 #include <iomanip>  //process format of string and stream
 #include <iostream>
-
-#define MAX_PATH 4096
+#include "test/chronotest.h"
 
 using namespace std::chrono;
 // using util::time::operator""_ms;
@@ -154,17 +153,4 @@ void chronotest()
 
     systemclk_tt = system_clock::to_time_t(systemclk_tp);
     std::cout << std::ctime(&systemclk_tt);
-
-
-//  time_point to string with millisec
-    std::cout << std::endl << ">>>> time_point to string with millisec <<<<" << std::endl;
-    highresclk_tp = high_resolution_clock::now();
-    milliseconds ms = duration_cast<milliseconds>(highresclk_tp.time_since_epoch());
-
-    seconds s = duration_cast<seconds>(ms);
-    highresclk_tt = s.count();
-    std::size_t fractional_seconds = ms.count() % 1000;
-
-    std::cout << std::ctime(&highresclk_tt);
-    std::cout << fractional_seconds << std::endl;
 }

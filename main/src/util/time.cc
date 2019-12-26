@@ -3,14 +3,9 @@
 #include <regex>
 #include <sstream>
 #include <stdexcept>
-#include "time.h"
+#include "util/time.h"
 
-using std::chrono::hours;
-using std::chrono::minutes;
-using std::chrono::seconds;
-using std::chrono::milliseconds;
-using std::chrono::duration_cast;
-using std::chrono::system_clock;
+using namespace std::chrono;
 using util::time::operator""_s;
 using util::time::operator""_ms;
 
@@ -54,8 +49,8 @@ static const std::map<const std::string, std::function<std::tm(const std::string
 
 std::string to_plain_stringX(const std::tm& t)
 {
-    char plain[4096] = {0,};
-    snprintf(plain, 4095, "%04u%02u%02u%02u%02u%02u",
+    char plain[FILENAME_MAX] = {0,};
+    snprintf(plain, FILENAME_MAX, "%04u%02u%02u%02u%02u%02u",
                 t.tm_year + 1900,
                 t.tm_mon + 1,
                 t.tm_mday,
@@ -175,6 +170,21 @@ std::string GetUtcTime(const std::string& time_string)
     std::stringstream rfc3339_time;
     rfc3339_time << put_rfc3339_time(&t) << milliseconds{ms} << "Z";
     return rfc3339_time.str();
+}
+
+/// <summary>
+/// Get time-tick-count since when system is booted.
+/// </summary>
+/// <returns>
+/// <list type="bullet">
+/// <item>uint64 size of integer (unit of milliseconds)</item>
+/// </list>
+/// </returns>
+uint64_t GetTickCount()
+{
+	auto tp = steady_clock::now();
+	auto du_msec = duration_cast<milliseconds>(tp.time_since_epoch());
+	return du_msec.count();
 }
 
 } // namespace time

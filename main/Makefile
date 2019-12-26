@@ -6,10 +6,12 @@ APPDIR := $(BUILDDIR)/bin
 
 SRCROOTDIR := src
 SRCDIRS = $(shell find $(SRCROOTDIR) -type d)
-SRCINC = $(addprefix -I,$(SRCDIRS))
+SRCINC = $(addprefix -I,$(SRCROOTDIR))
 
 CPPFILES != find src -name "*.cpp"
+#CPPFILES = $(shell find $(SRCROOTDIR) -name "*.cpp")
 CCFILES != find src -name "*.cc"
+#CCFILES = $(shell find $(SRCROOTDIR) -name "*.cc")
 SRCS = $(CPPFILES) $(CCFILES)
 OBJS = $(filter %.o,$(SRCS:%.cc=$(OBJDIR)/%.o)) \
        $(filter %.o,$(SRCS:%.cpp=$(OBJDIR)/%.o))
