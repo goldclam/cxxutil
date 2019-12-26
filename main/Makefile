@@ -84,8 +84,8 @@ $(OBJDIR)/%.o: %.cpp
 	$(CXX) $(CXXFLAGS) $(INCLUDE) -o $@ -c $<
 
 ## Link object files into executable
-### IMPORTANT!!! $(LDFLAGS) should be placed behind of $(SRCS) or $(OBJS)
-### so that $(SRCS) or $(OBJS) can find symbols in 3rd libraries
+## IMPORTANT!!! $(LDFLAGS) should be placed behind of $(SRCS) or $(OBJS)
+## so that $(SRCS) or $(OBJS) can find symbols in 3rd libraries
 $(APPDIR)/$(EXECUTABLE): $(OBJS)
 	@mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) $(INCLUDE) -o $(APPDIR)/$(EXECUTABLE) $(OBJS) $(LDFLAGS)
