@@ -2,7 +2,7 @@ EXECUTABLE := a.out
 
 BUILDDIR := build
 OBJDIR = $(BUILDDIR)/obj
-APPDIR := $(BUILDDIR)/bin
+APPDIR = $(BUILDDIR)/bin
 
 SRCROOTDIR := src
 SRCDIRS = $(shell find $(SRCROOTDIR) -type d)
