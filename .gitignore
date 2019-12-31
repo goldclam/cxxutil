@@ -1,6 +1,3 @@
-# visual studio code
-.vscode
-
 # Prerequisites
 *.d
 
@@ -33,3 +30,9 @@
 *.exe
 *.out
 *.app
+
+# visual studio code
+.vscode
+
+# Build directory and Executable result
+build

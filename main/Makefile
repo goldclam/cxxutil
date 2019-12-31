@@ -19,7 +19,7 @@ DEPS = $(OBJS:%o=%d)
 
 GTESTINC := -Iexternal/googletest/include
 GTESTLIB := -Lexternal/googletest -lgtest
-JSONCPPINC := -Iexternal/jsoncpp/json
+JSONCPPINC := -Iexternal/jsoncpp/include
 JSONCPPLIB := -Lexternal/jsoncpp -ljsoncpp
 
 CXX := g++
@@ -34,29 +34,35 @@ LDFLAGS = -L/usr/lib -lstdc++ -lm $(GTESTLIB) $(JSONCPPLIB)
 ###########################
 # PHONY RECIPES
 ###########################
-.PHONY: all
 all: build $(APPDIR)/$(EXECUTABLE)
+.PHONY: all
 
-.PHONY: build
+
 build:
 	@mkdir -p $(APPDIR)
 	@mkdir -p $(OBJDIR)
+.PHONY: build
 
-.PHONY: debug
+
 debug: CXXFLAGS += -DDEBUG -g
 debug: all
+.PHONY: debug
 
-.PHONY: release
+
 release: CXXFLAGS += -O2
 release: all
+.PHONY: release
 
-.PHONY: clean
+
 clean:
 	-@rm -rvf $(BUILDDIR)
+.PHONY: clean
 
-.PHONY: run
+
 run: all
 	@$(APPDIR)/$(EXECUTABLE)
+.PHONY: run
+
 
 ############################
 # FOR MAKE DEBUG
@@ -67,6 +73,7 @@ run: all
 # EX: $ make print-SRCDIRS
 ############################
 print-% : ; $(info $* is a $(flavor $*) variable set to [$($*)]) @true
+
 
 ############################
 # PATTERN RULES
