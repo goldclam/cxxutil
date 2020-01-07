@@ -1,11 +1,11 @@
 #include <iostream>
 #include "util/time.h"
-#include "test/chronotest.h"
+#include "exam/chronoexam.h"
 
 int main() {
 
 	std::cout << util::time::GetTickCount() << std::endl;
-	chronotest();
+	chrono_exam();
 
     return 0;
 }

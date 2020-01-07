@@ -1,7 +1,7 @@
 #include <chrono>
 #include <iomanip>  //process format of string and stream
 #include <iostream>
-#include "test/chronotest.h"
+#include "exam/chronoexam.h"
 
 using namespace std::chrono;
 // using util::time::operator""_ms;
@@ -25,7 +25,7 @@ void GetCurrentTimeString(std::string& current_time, std::string& rfc3339_time) 
     // rfc3339_time = util::time::to_rfc3339_string(*tm, dr_msec - dr_sec);
 }
 
-void chronotest()
+void chrono_exam()
 {
 
 // Second(1) > milli sec (10^-3 sec) > micro sec (10^-6 sec) > nano sec (10^-9 sec)
