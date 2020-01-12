@@ -1,11 +1,11 @@
 #include <iostream>
-#include "util/time.h"
-#include "exam/chronoexam.h"
+#include "exam/smartpointerexam.h"
 
 int main() {
 
-	std::cout << util::time::GetTickCount() << std::endl;
-	chrono_exam();
+	std::cout << "[cxx example]" << std::endl;
 
-    return 0;
+	smartpointer_exam();
+
+	return 0;
 }

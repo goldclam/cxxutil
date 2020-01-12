@@ -8,6 +8,7 @@
 
 
 void jsoncpp_exam() {
+	std::cout << "[jsoncpp_exam]" << std::endl;
 
 //READ Json from file
     Json::CharReaderBuilder rbuilder;

@@ -24,7 +24,7 @@ JSONCPPLIB := -Lexternal/jsoncpp -ljsoncpp
 
 CXX := g++
 CXXFLAGS ?= -W -Wall \
-            -std=c++11 -MMD -pthread
+            -std=c++14 -MMD -pthread
 CXXFLAGS_ROBUST = $(CXXFLAGS) -pedantic-errors -Wextra -Werror
 
 INCLUDE = -I. -Iinclude $(SRCINC) $(GTESTINC) $(JSONCPPINC)

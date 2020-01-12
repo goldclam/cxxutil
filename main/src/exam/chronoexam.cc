@@ -27,6 +27,7 @@ void GetCurrentTimeString(std::string& current_time, std::string& rfc3339_time) 
 
 void chrono_exam()
 {
+	std::cout << "[chrono_exam]" << std::endl;
 
 // Second(1) > milli sec (10^-3 sec) > micro sec (10^-6 sec) > nano sec (10^-9 sec)
 // tm = std::localtime(&time_t) = 
