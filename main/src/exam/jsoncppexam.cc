@@ -79,8 +79,8 @@ void jsoncpp_exam() {
     oroot["1key2"]["2key2"] = "valueBB";
     oroot["1key2"]["2key3"] = "valueBC";
     oroot["1key3"].append("valueCA");
-    oroot["1key3"].append("valueCA");
-    oroot["1key3"].append("valueCA");
+    oroot["1key3"].append("valueCB");
+    oroot["1key3"].append("valueCC");
 
 /* warning: ‘StyledWriter’ is old style and deprecated: Use StreamWriterBuilder instead [-Wdeprecated-declarations] */
     std::cout << std::endl << "[StyledWriter]" << std::endl;
@@ -124,5 +124,107 @@ void jsoncpp_exam() {
 
     // write to string
     std::cout << std::endl << ">>>> write to string with toStyledString() <<<<" << std::endl;
-    std::cout << oroot.toStyledString() << std::endl;
+    const std::string json_file3 = oroot.toStyledString();
+    std::cout << json_file3 << std::endl;
 }
+
+
+/** \brief Represents a <a HREF="http://www.json.org">JSON</a> value.
+ *
+ * This class is a discriminated union wrapper that can represents a:
+ * - signed integer [range: Value::minInt - Value::maxInt]
+ * - unsigned integer (range: 0 - Value::maxUInt)
+ * - double
+ * - UTF-8 string
+ * - boolean
+ * - 'null'
+ * - an ordered list of Value
+ * - collection of name/value pairs (javascript object)
+ *
+ * The type of the held value is represented by a #ValueType and
+ * can be obtained using type().
+ *
+ * Values of an #objectValue or #arrayValue can be accessed using operator[]()
+ * methods.
+ * Non-const methods will automatically create the a #nullValue element
+ * if it does not exist.
+ * The sequence of an #arrayValue will be automatically resized and initialized
+ * with #nullValue. resize() can be used to enlarge or truncate an #arrayValue.
+ *
+ * The get() methods can be used to obtain default value in the case the
+ * required element does not exist.
+ *
+ * It is possible to iterate over the list of member keys of an object using
+ * the getMemberNames() method.
+ 
+enum ValueType {
+  nullValue = 0, ///< 'null' value
+  intValue,      ///< signed integer value
+  uintValue,     ///< unsigned integer value
+  realValue,     ///< double value
+  stringValue,   ///< UTF-8 string value
+  booleanValue,  ///< bool value
+  arrayValue,    ///< array value (ordered list)
+  objectValue    ///< object value (collection of name/value pairs).
+};
+*/
+
+
+
+void jsontype() {
+
+    Json::Value tjson; 
+    tjson["int"] = 1;
+    tjson["uint"] = -1;
+    tjson["double"] = 3.21;
+    tjson["string"] = "help";
+    tjson["boolean"] = false;
+    tjson["array"].append(1);
+    tjson["array"].append("a2");
+//    tjson["obje"].append({"key","val"});
+    std::cout << tjson << std::endl;
+
+    std::cout << std::endl << ">>>> Members: " << std::endl; 
+    Json::Value::Members m = tjson.getMemberNames();
+    for (auto i : m) {
+        std::cout << i << " isMember? " << tjson.isMember(i) << std::endl;
+        std::cout << i << ":: type = " << tjson[i].type() << std::endl;
+    }
+}
+/*
+static void checkTypeAndPrint(const value &v)
+{
+    switch(v.type())
+    {
+    case Json::Value::ValueType.nullValue:
+            if(v.is_double())
+            printOneValue(key, v.as_double());
+        else
+            printOneValue(key, v.as_integer());
+        break;
+    case value::value_type::Boolean:
+        printOneValue(key, v.as_bool());
+        break;
+    case value::value_type::String:
+        printOneValue(key, v.as_string());
+        break;
+    case value::value_type::Object:
+        for(auto iter : v.as_object())
+        {
+            const wstring &k = iter.first;
+            const value &val = iter.second;
+            printOne(k, val, level+1);
+        }
+        break;
+    case value::value_type::Array:
+        for(auto it : v.as_array())
+        {
+            printOne(key, it, level+1);
+        }
+        break;
+    case value::value_type::Null:
+    default:
+        break;
+    }
+}
+*/
