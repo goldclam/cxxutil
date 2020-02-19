@@ -90,7 +90,7 @@ void jsoncpp_exam() {
     std::cout << std::endl << "[Jason::value]" << std::endl;
     std::cout << oroot << std::endl;
 
-    std::cout << std::endl << "[StreamWriterBuilder]";
+    std::cout << std::endl << "\n[StreamWriterBuilder]";
     Json::StreamWriterBuilder wbuilder;
     //wbuilder.setDefaults();  //write builder has settings, refer Default settings
     //! [StreamWriterBuilderDefaults]
@@ -105,13 +105,24 @@ void jsoncpp_exam() {
 
     // write to stream
     wbuilder["indentation"] = "....";  // indentation default is \t
-    std::cout << std::endl << ">>>> write to stream <<<<" << std::endl;
+    std::cout << std::endl << ">>>> write to stream, indentation with .... <<<<" << std::endl;
     const std::unique_ptr<Json::StreamWriter> writer(wbuilder.newStreamWriter());
     writer->write(oroot, &std::cout);
+    std::cout << std::endl;
 
     // write to string
     wbuilder["indentation"] = ",,,,";  // indentation default is \t
-    std::cout << std::endl << ">>>> write to string <<<<" << std::endl;
+    std::cout << std::endl << ">>>> write to string, indentation with ,,,, <<<<" << std::endl;
     const std::string json_file = Json::writeString(wbuilder, oroot);
     std::cout << json_file << std::endl;
+
+    // write to string
+    wbuilder["indentation"] = "\t";  // indentation default is \t
+    std::cout << std::endl << ">>>> write to string, indentation with TAB <<<<" << std::endl;
+    const std::string json_file2 = Json::writeString(wbuilder, oroot);
+    std::cout << json_file2 << std::endl;
+
+    // write to string
+    std::cout << std::endl << ">>>> write to string with toStyledString() <<<<" << std::endl;
+    std::cout << oroot.toStyledString() << std::endl;
 }

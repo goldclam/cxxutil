@@ -3,7 +3,7 @@
 #include <regex>
 #include <sstream>
 #include <stdexcept>
-#include "util/time.h"
+#include "time.h"
 
 using namespace std::chrono;
 using util::time::operator""_s;

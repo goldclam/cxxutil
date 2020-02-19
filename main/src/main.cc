@@ -1,11 +1,13 @@
 #include <iostream>
-#include "exam/smartpointerexam.h"
+#include <string>
+#include "exam/jsoncppexam.h"
+
+
+using namespace std;
 
 int main() {
 
-	std::cout << "[cxx example]" << std::endl;
-
-	smartpointer_exam();
-
+	jsoncpp_exam();
+	
 	return 0;
 }
