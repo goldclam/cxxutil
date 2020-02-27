@@ -6,30 +6,52 @@
 // JSON header
 #include "json/json.h"
 
+// #define WINDOWS  /* uncomment this line to use it for windows.*/ 
+#ifdef WINDOWS
+#include <direct.h>
+#define GetCurrentDir _getcwd
+#else
+#include <unistd.h>
+#define GetCurrentDir getcwd
+#endif
+
+std::string GetCurrentWorkingDir( void ) {
+    char buff[FILENAME_MAX];
+    GetCurrentDir( buff, FILENAME_MAX );
+    std::string current_working_dir{buff};
+    return current_working_dir;
+}
 
 void jsoncpp_exam() {
-	std::cout << "[jsoncpp_exam]" << std::endl;
+    std::cout << "[jsoncpp_exam]" << std::endl;
 
 //READ Json from file
     Json::CharReaderBuilder rbuilder;
-    std::ifstream ifs("exam/example.json");
+    
+    std::ifstream ifs("./external/jsoncpp/exam/example.json");
     Json::Value iroot;   // will contains the root value after parsing.
     JSONCPP_STRING err;
 
     // read from stream
     // <example.json>
     // {
-    // "encoding" : "UTF-8",
-    // "plug-ins" : [
-    //     "python",
-    //     "c++",
-    //     "ruby"
-    //     ],
-    // "indent" : { "length" : 3, "use_space": true }
+    //     "encoding" : "UTF-8",
+    //     "plug-ins" : [
+    //         "python",
+    //         "c++",
+    //         "ruby"
+    //         ],
+    //     "indent" : { "length" : 3, "use_space": true }
     // }
+
+    // read from stream :: string/file >> stream >> parseFromStream() >> jsonvalue 
     std::cout << std::endl << ">>>> read from stream <<<<" << std::endl;
-    if (!Json::parseFromStream(rbuilder,ifs,&iroot,&err)) {
-        std::cout << "[Error] parseFromStream: " << err << std::endl;
+    if (ifs.is_open()) {
+        if (!Json::parseFromStream(rbuilder,ifs,&iroot,&err)) {
+            std::cout << "[Error] parseFromStream: " << err << std::endl;
+        }
+    } else {
+        std::cout << "[Error] Json File NOT Found: " << GetCurrentWorkingDir() << std::endl;
     }
 
     std::string encoding = iroot.get("encoding", "UTF-X" ).asString();
@@ -42,8 +64,8 @@ void jsoncpp_exam() {
     std::cout << std::endl;
 
 
-    // read from string
-    std::cout << std::endl << ">>>> read from string <<<<" << std::endl;
+    // read from (c)string :: string >> cstring >> CharReader >> jsonvalue
+    std::cout << std::endl << ">>>> read from cstring <<<<" << std::endl;
     const std::string rawJson = R"({"Age": 20, "Name": "soonwoo"})";
     const int rawJsonLength = static_cast<int>(rawJson.length());
     std::unique_ptr<Json::CharReader> const reader(rbuilder.newCharReader());
@@ -55,7 +77,6 @@ void jsoncpp_exam() {
     const int age = iroot["Age"].asInt();
     std::cout << "name: " << name << std::endl;
     std::cout << "age: " << age << std::endl << std::endl;
-
 
 
 // write example
@@ -79,18 +100,24 @@ void jsoncpp_exam() {
     oroot["1key2"]["2key2"] = "valueBB";
     oroot["1key2"]["2key3"] = "valueBC";
     oroot["1key3"].append("valueCA");
-    oroot["1key3"].append("valueCB");
-    oroot["1key3"].append("valueCC");
+    oroot["1key3"].append("valueCA");
+    oroot["1key3"].append("valueCA");
 
-/* warning: ‘StyledWriter’ is old style and deprecated: Use StreamWriterBuilder instead [-Wdeprecated-declarations] */
-    std::cout << std::endl << "[StyledWriter]" << std::endl;
-    Json::StyledWriter styledwriter;
-    std::cout << styledwriter.write( oroot ) << std::endl;
+    std::cout << std::endl << "WRITE [Jason::value]" << std::endl;
 
-    std::cout << std::endl << "[Jason::value]" << std::endl;
+    // write to stream directly
+    std::cout << std::endl << ">>>> write to stream <<<<" << std::endl;
     std::cout << oroot << std::endl;
 
-    std::cout << std::endl << "\n[StreamWriterBuilder]";
+    // write to string directly
+    std::cout << std::endl << ">>>> write to string <<<<" << std::endl;
+    //std::cout << oroot.toStyledString() << std::endl;
+    std::string styledString = oroot.toStyledString();
+    std::cout << styledString << std::endl;
+
+
+    // write as customized style :: using StreamWriterBuilder
+    std::cout << std::endl << "[StreamWriterBuilder]";
     Json::StreamWriterBuilder wbuilder;
     //wbuilder.setDefaults();  //write builder has settings, refer Default settings
     //! [StreamWriterBuilderDefaults]
@@ -103,29 +130,18 @@ void jsoncpp_exam() {
     // (*settings)["precisionType"] = "significant";
     //! [StreamWriterBuilderDefaults]
 
-    // write to stream
+    // write to stream as customized style
     wbuilder["indentation"] = "....";  // indentation default is \t
-    std::cout << std::endl << ">>>> write to stream, indentation with .... <<<<" << std::endl;
+    std::cout << std::endl << ">>>> write to stream with customized style <<<<" << std::endl;
     const std::unique_ptr<Json::StreamWriter> writer(wbuilder.newStreamWriter());
     writer->write(oroot, &std::cout);
-    std::cout << std::endl;
 
-    // write to string
+
+    // write to string as customized style
     wbuilder["indentation"] = ",,,,";  // indentation default is \t
-    std::cout << std::endl << ">>>> write to string, indentation with ,,,, <<<<" << std::endl;
+    std::cout << std::endl << ">>>> write to string with customized style <<<<" << std::endl;
     const std::string json_file = Json::writeString(wbuilder, oroot);
     std::cout << json_file << std::endl;
-
-    // write to string
-    wbuilder["indentation"] = "\t";  // indentation default is \t
-    std::cout << std::endl << ">>>> write to string, indentation with TAB <<<<" << std::endl;
-    const std::string json_file2 = Json::writeString(wbuilder, oroot);
-    std::cout << json_file2 << std::endl;
-
-    // write to string
-    std::cout << std::endl << ">>>> write to string with toStyledString() <<<<" << std::endl;
-    const std::string json_file3 = oroot.toStyledString();
-    std::cout << json_file3 << std::endl;
 }
 
 

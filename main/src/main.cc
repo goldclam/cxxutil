@@ -7,7 +7,7 @@ using namespace std;
 
 int main() {
 
-	jsontype();
+	jsoncpp_exam();
 	
 	return 0;
 }
