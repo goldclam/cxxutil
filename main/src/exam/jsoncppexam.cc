@@ -27,10 +27,10 @@ void jsoncpp_exam() {
 
 //READ Json from file
     Json::CharReaderBuilder rbuilder;
-    
+
     std::ifstream ifs("./external/jsoncpp/exam/example.json");
-    Json::Value iroot;   // will contains the root value after parsing.
-    JSONCPP_STRING err;
+    Json::Value iroot;  // will contains the root value after parsing.
+    Json::String err;
 
     // read from stream
     // <example.json>
@@ -44,10 +44,10 @@ void jsoncpp_exam() {
     //     "indent" : { "length" : 3, "use_space": true }
     // }
 
-    // read from stream :: string/file >> stream >> parseFromStream() >> jsonvalue 
+    // read from stream :: file >> stream >> parseFromStream() >> jsonvalue 
     std::cout << std::endl << ">>>> read from stream <<<<" << std::endl;
     if (ifs.is_open()) {
-        if (!Json::parseFromStream(rbuilder,ifs,&iroot,&err)) {
+        if (!Json::parseFromStream(rbuilder, ifs, &iroot, &err)) {
             std::cout << "[Error] parseFromStream: " << err << std::endl;
         }
     } else {
@@ -56,27 +56,34 @@ void jsoncpp_exam() {
 
     std::string encoding = iroot.get("encoding", "UTF-X" ).asString();
     std::cout << "encoding: " << encoding << std::endl;
-
-    const Json::Value plugins = iroot["plug-ins"];   //read "plug-ins" sub-tree
+      //read "plug-ins" sub-tree
+    const Json::Value plugins = iroot["plug-ins"];
     std::cout << "plug-ins : ";
-    for ( int index = 0; index < plugins.size(); ++index )  // Iterates over the sequence elements.
+      // Iterates over the sequence elements.
+    for ( int index = 0; index < plugins.size(); ++index )
         std::cout << plugins[index].asString() << ", ";
     std::cout << std::endl;
 
 
-    // read from (c)string :: string >> cstring >> CharReader >> jsonvalue
-    std::cout << std::endl << ">>>> read from cstring <<<<" << std::endl;
     const std::string rawJson = R"({"Age": 20, "Name": "soonwoo"})";
+    // read from (c)string :: (c)string >> stringstream >> jsonvalue
+    std::cout << std::endl << ">>>> read from cstring by stringstream <<<<" << std::endl;
+    std::stringstream {rawJson} >> iroot;
+    std::cout << "rawjson: " << std::endl << iroot.toStyledString() << std::endl;
+
+    // read from (c)string :: string >> cstring >> CharReader >> jsonvalue
+    std::cout << std::endl << ">>>> read from cstring by CharReader <<<<" << std::endl;
     const int rawJsonLength = static_cast<int>(rawJson.length());
     std::unique_ptr<Json::CharReader> const reader(rbuilder.newCharReader());
-    if (!reader->parse(rawJson.c_str(), rawJson.c_str() + rawJsonLength, &iroot,
-                       &err)) {
+    if (!reader->parse(rawJson.c_str(), rawJson.c_str() + rawJsonLength, &iroot, &err)) {
         std::cout << "[Error] reader: " << err << std::endl;
     }
     const std::string name = iroot["Name"].asString();
     const int age = iroot["Age"].asInt();
     std::cout << "name: " << name << std::endl;
     std::cout << "age: " << age << std::endl << std::endl;
+
+
 
 
 // write example
