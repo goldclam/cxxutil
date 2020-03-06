@@ -1,13 +1,13 @@
 #include <iostream>
 #include <string>
-#include "exam/jsoncppexam.h"
+#include "exam/curldebugexam.h"
 
 
 using namespace std;
 
 int main() {
 
-	jsoncpp_exam();
+	curlmain();
 	
 	return 0;
 }

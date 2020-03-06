@@ -28,7 +28,7 @@ CXXFLAGS ?= -W -Wall \
 CXXFLAGS_ROBUST = $(CXXFLAGS) -pedantic-errors -Wextra -Werror
 
 INCLUDE = -I. -Iinclude $(SRCINC) $(GTESTINC) $(JSONCPPINC)
-LDFLAGS = -L/usr/lib -lstdc++ -lm $(GTESTLIB) $(JSONCPPLIB)
+LDFLAGS = -L/usr/lib -lstdc++ -lm -lcurl $(GTESTLIB) $(JSONCPPLIB)
 
 
 ###########################
