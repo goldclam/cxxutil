@@ -1,3 +1,5 @@
+#if defined(CURLTEST)
+
 #include <iostream>
 #include <sstream>
 #include <cstdio>
@@ -72,3 +74,5 @@ int curlmain(void)
   }
   return 0;
 }
+
+#endif // CURLTEST

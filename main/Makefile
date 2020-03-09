@@ -1,3 +1,7 @@
+
+
+CURLTEST := false
+
 EXECUTABLE := a.out
 
 BUILDDIR := build
@@ -21,6 +25,17 @@ GTESTINC := -Iexternal/googletest/include
 GTESTLIB := -Lexternal/googletest -lgtest
 JSONCPPINC := -Iexternal/jsoncpp/include
 JSONCPPLIB := -Lexternal/jsoncpp -ljsoncpp
+ifeq (CURLTEST, true)
+CURLLIB := -lcurl 
+else
+CURLLIB :=
+endif
+
+CPPDEFS :=
+ifeq (CURLTEST, true)
+CPPDEFS += -DCURTEST=true
+endif
+
 
 CXX := g++
 CXXFLAGS ?= -W -Wall \
@@ -28,7 +43,7 @@ CXXFLAGS ?= -W -Wall \
 CXXFLAGS_ROBUST = $(CXXFLAGS) -pedantic-errors -Wextra -Werror
 
 INCLUDE = -I. -Iinclude $(SRCINC) $(GTESTINC) $(JSONCPPINC)
-LDFLAGS = -L/usr/lib -lstdc++ -lm -lcurl $(GTESTLIB) $(JSONCPPLIB)
+LDFLAGS = -L/usr/lib -lstdc++ -lm $(GTESTLIB) $(JSONCPPLIB) $(CURLLIB)
 
 
 ###########################
@@ -84,18 +99,18 @@ print-% : ; $(info $* is a $(flavor $*) variable set to [$($*)]) @true
 ## Compile into object files but not link executable
 $(OBJDIR)/%.o: %.cc
 	@mkdir -p $(@D)
-	$(CXX) $(CXXFLAGS) $(INCLUDE) -o $@ -c $<
+	$(CXX) $(CPPDEFS) $(CXXFLAGS) $(INCLUDE) -o $@ -c $<
 
 $(OBJDIR)/%.o: %.cpp
 	@mkdir -p $(@D)
-	$(CXX) $(CXXFLAGS) $(INCLUDE) -o $@ -c $<
+	$(CXX) $(CPPDEFS) $(CXXFLAGS) $(INCLUDE) -o $@ -c $<
 
 ## Link object files into executable
 ## IMPORTANT!!! $(LDFLAGS) should be placed behind of $(SRCS) or $(OBJS)
 ## so that $(SRCS) or $(OBJS) can find symbols in 3rd libraries
 $(APPDIR)/$(EXECUTABLE): $(OBJS)
 	@mkdir -p $(@D)
-	$(CXX) $(CXXFLAGS) $(INCLUDE) -o $(APPDIR)/$(EXECUTABLE) $(OBJS) $(LDFLAGS)
+	$(CXX) $(CPPDEFS) $(CXXFLAGS) $(INCLUDE) -o $(APPDIR)/$(EXECUTABLE) $(OBJS) $(LDFLAGS)
 
 
 ############################

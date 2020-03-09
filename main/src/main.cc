@@ -1,13 +1,13 @@
 #include <iostream>
 #include <string>
-#include "exam/curldebugexam.h"
+#include "exam/copyconsexam.h"
 
 
 using namespace std;
 
 int main() {
 
-	curlmain();
+	copyconsexam();
 	
 	return 0;
 }
