@@ -1,13 +1,8 @@
 #include <iostream>
-#include <string>
-#include "exam/copyconsexam.h"
+#include "exam/typeidexam.h"
 
+int main () {
+    typeidexam();
 
-using namespace std;
-
-int main() {
-
-	copyconsexam();
-	
-	return 0;
+    return 0;
 }
