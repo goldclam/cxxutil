@@ -11,26 +11,26 @@ using namespace std;
 
 // vector, array, deque, list, set, map, multimap, unorderedmap, stack, queue, priority_queue
 void stlexam() {
-	vectorexam();
+    vectorexam();
 }
 
 void vectorexam() {
-	std::vector<int> vi{};
+    std::vector<int> vi{};
 
-	int i1 = 1;
-	int i2 = 2;
+    int i1 = 1;
+    int i2 = 2;
 
-	vi.push_back(i1); //copy of value
-	vi.push_back(i2); //copy of value
+    vi.push_back(i1); //copy of value
+    vi.push_back(i2); //copy of value
 
-	std::clog << vi[0] <<std::endl;
-	vi[0] = 3;
-	std::clog << vi[0] <<std::endl;
-	std::clog << i1 <<std::endl;
+    std::clog << vi[0] <<std::endl;
+    vi[0] = 3;
+    std::clog << vi[0] <<std::endl;
+    std::clog << i1 <<std::endl;
 }
 
 void setexam1() {
-	set<int> s;
+    set<int> s;
 
     pair<set<int>::iterator, bool> pr;
     pr = s.insert(50);    // insert 결과 pair 반환
@@ -87,23 +87,23 @@ void setexam1() {
     cout << "value_compare less : " << typeid(s.value_comp()).name() << endl;
     cout << "value_compare greater : " << typeid(s2.value_comp()).name() << endl;
 
-	/*
-		결과 :
-		50 삽입 성공!
-		40 50 80
-		50가 이미 있습니다. 삽입 실패!
-		40 50 80
-		40 50 60 80
-		90 80 70 50 40 30 10
-		key_compare less : struct std::less<int>
-		key_compare greater : struct std::greater<int>
-		value_compare less : struct std::less<int>
-		value_compare greater : struct std::greater<int>
-	*/
+    /*
+        결과 :
+        50 삽입 성공!
+        40 50 80
+        50가 이미 있습니다. 삽입 실패!
+        40 50 80
+        40 50 60 80
+        90 80 70 50 40 30 10
+        key_compare less : struct std::less<int>
+        key_compare greater : struct std::greater<int>
+        value_compare less : struct std::less<int>
+        value_compare greater : struct std::greater<int>
+    */
 }
 
 void setexam2() {
-	set<int> s;
+    set<int> s;
 
     s.insert(40);
     s.insert(30);
@@ -161,17 +161,17 @@ void setexam2() {
     else
         cout << "55가 s에 없다 " << endl;
 
-	/*
-		결과 :
-		10 30 40 70 80 90
-		원소 50의 개수 : 1
-		원소 100의 개수 : 0
-		30가 s에 있다
-		30
-		40
-		55가 s에 없다
-		30
-		40
-		55가 s에 없다
-	*/
+    /*
+        결과 :
+        10 30 40 70 80 90
+        원소 50의 개수 : 1
+        원소 100의 개수 : 0
+        30가 s에 있다
+        30
+        40
+        55가 s에 없다
+        30
+        40
+        55가 s에 없다
+    */
 }

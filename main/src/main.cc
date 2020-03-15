@@ -1,8 +1,8 @@
 #include <iostream>
-#include "exam/typeidexam.h"
+#include "exam/inheritexam.h"
 
 int main () {
-    typeidexam();
+    inheritexam();
 
     return 0;
 }

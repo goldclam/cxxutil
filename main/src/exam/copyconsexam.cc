@@ -2,12 +2,12 @@
 using namespace std;
 
 class Joker {
-    public:
-        Joker();
-        Joker(const Joker& rhs);
-        Joker& operator=(const Joker& rhs);
-        bool validate1(Joker rhs);
-        bool validate2(const Joker& rhs);
+public:
+    Joker();
+    Joker(const Joker& rhs);
+    Joker& operator=(const Joker& rhs);
+    bool validate1(Joker rhs);
+    bool validate2(const Joker& rhs);
 };
 
 Joker::Joker() {
